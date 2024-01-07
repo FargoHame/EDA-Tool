@@ -141,13 +141,8 @@ def main():
                 pair_plot = sns.pairplot(df[numeric_selected_features])
 
                 # Save the pair plot to a BytesIO buffer
-                buffer_pair_plot = BytesIO()
-                pair_plot.savefig(buffer_pair_plot, format='png')
-                buffer_pair_plot.seek(0)
-
-                # Display the pair plot
-                st.image(buffer_pair_plot, caption="Pair Plot", use_column_width=True, format='png')
-                plt.close(pair_plot.fig)
+                # Display the pair plot directly using st.pyplot
+                st.pyplot(pair_plot)
                 st.markdown("A pair plot provides scatter plots for all pairs of selected numeric features. "
                             "It helps visualize relationships and identify patterns.")
 
@@ -180,15 +175,7 @@ def main():
                 st.pyplot(fig)
                 plt.close(fig)
 
-                # Calculate feature importance based on correlation with the target variable
-                feature_importance = correlation_matrix[target_variable].abs().sort_values(ascending=False)
-                most_important_feature = feature_importance.index[1]  # Exclude the target variable
-                least_important_feature = feature_importance.index[-1]  # Exclude the target variable
-
-                # Display most and least important features
-                st.subheader("Feature Importance:")
-                st.write(f"Most Important Feature: {most_important_feature}")
-                st.write(f"Least Important Feature: {least_important_feature}")
+                 
 
 if __name__ == "__main__":
     main()
